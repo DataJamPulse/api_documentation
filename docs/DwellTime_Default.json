@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "d0c29a54-600b-4a01-8f57-4b246fd82075",
+		"name": "DataJam_Portal_Customer_API Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32270763",
+		"_collection_link": "https://gold-crescent-280168.postman.co/workspace/API_Testing~7089035a-6f88-493c-96e7-a40edd064a44/collection/32270763-d0c29a54-600b-4a01-8f57-4b246fd82075?action=share&source=collection_link&creator=32270763"
+	},
+	"item": [
+		{
+			"name": "https://datajamportal.com/CustomerAPI/GetData/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Password.01",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "sdn@sdn.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"project_name\": \"Shopping Centre\",\r\n    \"device_number\": \"JB000271\",\r\n    \"start_date\": \"2024-10-01\",\r\n    \"end_date\": \"2024-10-04\",\r\n    \"type_data\": \"DwellTime\",\r\n    \"filter\": \"Default\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://datajamportal.com/CustomerAPI/GetData/",
+					"protocol": "https",
+					"host": [
+						"datajamportal",
+						"com"
+					],
+					"path": [
+						"CustomerAPI",
+						"GetData",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://datajamportal.com/CustomerAPI/AddData/",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Password.11",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "scion@scioninteractive.co.uk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"project_name\": \"Shopping Centre\",\r\n    \"device_number\": \"JB000271\",\r\n    \"timezone\": \"Asia/Kolkata\",\r\n    \"user_data\": [\r\n    {\r\n        \"timestamp\": \"2024-10-04 01:00:00\",\r\n        \"value\": 100\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 02:00:00\",\r\n        \"value\": 200\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 03:00:00\",\r\n        \"value\": 300\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 04:00:00\",\r\n        \"value\": 400\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 05:00:00\",\r\n        \"value\": 500\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 16:00:00\",\r\n        \"value\": 600\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 17:00:00\",\r\n        \"value\": 700\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 18:00:00\",\r\n        \"value\": 800\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 19:00:00\",\r\n        \"value\": 900\r\n    },\r\n    {\r\n        \"timestamp\": \"2024-10-04 20:00:00\",\r\n        \"value\": 1000\r\n    }\r\n],\r\n    \"type_data\": \"UserData\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://datajamportal.com/CustomerAPI/GetData/",
+					"protocol": "https",
+					"host": [
+						"datajamportal",
+						"com"
+					],
+					"path": [
+						"CustomerAPI",
+						"AddData",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
