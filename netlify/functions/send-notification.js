@@ -94,8 +94,8 @@ exports.handler = async (event) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                from: 'API ACCESS ALERT <notifications@send.data-jam.com>',
-                to: ['Team@data-jam.com'],
+                from: 'API ACCESS ALERT <notifications@data-jam.com>',
+                to: ['arran@data-jam.com'],
                 subject: `New API Docs Visitor: ${email}`,
                 html: emailBody
             })
