@@ -947,11 +947,12 @@
         <a href="#data-types">5. Data Types</a>
         <a href="#request-format">6. Request Format</a>
         <a href="#response-format">7. Response Format</a>
-        <a href="#limits">8. Rate Limits</a>
-        <a href="#postman">9. Postman Setup</a>
-        <a href="#examples">10. Code Examples</a>
-        <a href="#faq">11. FAQ</a>
-        <a href="#support">12. Support</a>
+        <a href="#occupancy">8. Occupancy Data</a>
+        <a href="#limits">9. Rate Limits</a>
+        <a href="#postman">10. Postman Setup</a>
+        <a href="#examples">11. Code Examples</a>
+        <a href="#faq">12. FAQ</a>
+        <a href="#support">13. Support</a>
     </div>
 </nav>
 
@@ -992,11 +993,12 @@
             <a href="#data-types">5. Data Types</a>
             <a href="#request-format">6. Request Format</a>
             <a href="#response-format">7. Response Format</a>
-            <a href="#limits">8. Rate Limits & Constraints</a>
-            <a href="#postman">9. Postman Setup Guide</a>
-            <a href="#examples">10. Code Examples</a>
-            <a href="#faq">11. FAQ</a>
-            <a href="#support">12. Support</a>
+            <a href="#occupancy">8. Occupancy Data (NEW)</a>
+            <a href="#limits">9. Rate Limits & Constraints</a>
+            <a href="#postman">10. Postman Setup Guide</a>
+            <a href="#examples">11. Code Examples</a>
+            <a href="#faq">12. FAQ</a>
+            <a href="#support">13. Support</a>
         </div>
     </section>
 
@@ -1042,6 +1044,7 @@
             <div class="sandbox-tabs">
                 <button class="sandbox-tab active" data-tab="getdata">GetData</button>
                 <button class="sandbox-tab" data-tab="getdeviceinfo">GetDeviceInfo</button>
+                <button class="sandbox-tab" data-tab="getoccudata">GetOccuData</button>
             </div>
 
             <!-- GetData Tab -->
@@ -1137,6 +1140,45 @@
                     <strong>Tip:</strong> GetDeviceInfo returns lat/long coordinates, timezone, and device metadata.
                 </div>
             </div>
+
+            <!-- GetOccuData Tab -->
+            <div class="sandbox-content" id="tab-getoccudata">
+                <div class="sandbox-form">
+                    <div class="sandbox-field">
+                        <label>Email</label>
+                        <input type="email" id="sandbox-email-occu" placeholder="your@email.com">
+                    </div>
+                    <div class="sandbox-field">
+                        <label>Password</label>
+                        <input type="password" id="sandbox-password-occu" placeholder="Your password">
+                    </div>
+                    <div class="sandbox-field">
+                        <label>Project Name</label>
+                        <input type="text" id="sandbox-project-occu" placeholder="Your Project">
+                    </div>
+                    <div class="sandbox-field">
+                        <label>Start Date</label>
+                        <input type="date" id="sandbox-start-occu">
+                    </div>
+                    <div class="sandbox-field">
+                        <label>End Date</label>
+                        <input type="date" id="sandbox-end-occu">
+                    </div>
+                </div>
+                <button class="sandbox-btn" id="sandbox-send-occu">Send Request</button>
+
+                <div class="sandbox-response" id="sandbox-response-occu">
+                    <div class="sandbox-response-header">
+                        <h4>Response</h4>
+                        <span class="sandbox-status" id="sandbox-status-occu"></span>
+                    </div>
+                    <div class="sandbox-output" id="sandbox-output-occu">// Response will appear here...</div>
+                </div>
+
+                <div class="sandbox-note">
+                    <strong>Tip:</strong> GetOccuData returns occupancy data across all devices in the project - no device number needed.
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1180,7 +1222,7 @@
             <div class="section-icon"><img src="icons/transfer.svg" alt=""></div>
             <h2>3. API Endpoints</h2>
         </div>
-        <p>Three endpoints. That's it. We keep things clean so you can focus on what matters - your data.</p>
+        <p>Four endpoints to cover everything you need. We keep things clean so you can focus on what matters - your data.</p>
 
         <div class="card-grid">
             <div class="endpoint-card">
@@ -1193,6 +1235,12 @@
                 <span class="method method-get">GET</span>
                 <h4>/CustomerAPI/GetDeviceInfo/</h4>
                 <p>Retrieve device configuration, location, status, and metadata for a specific JamBox.</p>
+            </div>
+
+            <div class="endpoint-card">
+                <span class="method method-get">GET</span>
+                <h4>/CustomerAPI/GetOccuData/</h4>
+                <p>Retrieve real-time occupancy data across all devices in a project for a date range. Perfect for capacity monitoring.</p>
             </div>
 
             <div class="endpoint-card">
@@ -1469,11 +1517,76 @@
         </table>
     </section>
 
+    <!-- Occupancy Data -->
+    <section class="section" id="occupancy">
+        <div class="section-header">
+            <div class="section-icon"><img src="icons/statistics.svg" alt=""></div>
+            <h2>8. Occupancy Data</h2>
+        </div>
+        <p>Track real-time occupancy across your entire project. Unlike GetData (which queries per-device), GetOccuData returns aggregated occupancy metrics for all devices in a project.</p>
+
+        <div class="alert alert-info">
+            <strong>New Endpoint:</strong> The <span class="inline-code">GetOccuData</span> endpoint is perfect for capacity monitoring, space utilisation analysis, and real-time occupancy dashboards.
+        </div>
+
+        <h3>GetOccuData Request Body</h3>
+        <div class="code-block">
+            <pre>{
+    "project_name": "Your Project Name",
+    "start_date": "YYYY-MM-DD",
+    "end_date": "YYYY-MM-DD"
+}</pre>
+        </div>
+
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><span class="inline-code">project_name</span></td>
+                <td>string</td>
+                <td>Yes</td>
+                <td>Project name (case-sensitive)</td>
+            </tr>
+            <tr>
+                <td><span class="inline-code">start_date</span></td>
+                <td>string</td>
+                <td>Yes</td>
+                <td>Start date in YYYY-MM-DD format</td>
+            </tr>
+            <tr>
+                <td><span class="inline-code">end_date</span></td>
+                <td>string</td>
+                <td>Yes</td>
+                <td>End date in YYYY-MM-DD format</td>
+            </tr>
+        </table>
+
+        <div class="alert alert-warning">
+            <strong>Note:</strong> Unlike GetData, this endpoint does not require a <span class="inline-code">device_number</span> - it returns data across all devices in the project.
+        </div>
+
+        <h3>Example Request</h3>
+        <div class="code-block">
+            <pre>curl -X GET "https://datajamportal.com/CustomerAPI/GetOccuData/" \
+  -u "your_email@domain.com:your_password" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_name": "Your Project",
+    "start_date": "2026-01-01",
+    "end_date": "2026-01-07"
+  }'</pre>
+        </div>
+    </section>
+
     <!-- Limits -->
     <section class="section" id="limits">
         <div class="section-header">
             <div class="section-icon"><img src="icons/time.svg" alt=""></div>
-            <h2>7. Rate Limits & Constraints</h2>
+            <h2>9. Rate Limits & Constraints</h2>
         </div>
         <p>One thing to know: we keep queries focused. Here's the deal:</p>
 
@@ -1504,7 +1617,7 @@ December:  start_date: "2026-12-01", end_date: "2026-12-31"</pre>
     <section class="section page-break" id="postman">
         <div class="section-header">
             <div class="section-icon"><img src="icons/book.svg" alt=""></div>
-            <h2>8. Postman Setup Guide</h2>
+            <h2>10. Postman Setup Guide</h2>
         </div>
         <p>Postman is the easiest way to test the API without writing a single line of code. Here's your setup in 6 steps:</p>
 
@@ -1556,7 +1669,7 @@ December:  start_date: "2026-12-01", end_date: "2026-12-31"</pre>
     <section class="section" id="examples">
         <div class="section-header">
             <div class="section-icon"><img src="icons/coding.svg" alt=""></div>
-            <h2>9. Code Examples</h2>
+            <h2>11. Code Examples</h2>
         </div>
         <p>Copy. Paste. Customise. Get jamming in your language of choice:</p>
 
@@ -1629,7 +1742,7 @@ axios.get('https://datajamportal.com/CustomerAPI/GetData/', {
     <section class="section" id="faq">
         <div class="section-header">
             <div class="section-icon"><img src="icons/help.svg" alt=""></div>
-            <h2>10. Frequently Asked Questions</h2>
+            <h2>12. Frequently Asked Questions</h2>
         </div>
         <p>Got questions? We've got answers:</p>
 
@@ -1668,7 +1781,7 @@ axios.get('https://datajamportal.com/CustomerAPI/GetData/', {
     <section class="section" id="support">
         <div class="section-header">
             <div class="section-icon"><img src="icons/mailing.svg" alt=""></div>
-            <h2>11. Support</h2>
+            <h2>13. Support</h2>
         </div>
         <p>Stuck? Hit a snag? Just want to say hi? We're here for it. The Data Jam team is ready to help you get the most out of your data:</p>
 
@@ -1779,6 +1892,16 @@ async function handleEmailSubmit(e) {
             // Still allow access even if logging fails
         }
 
+        // Send email notification via Resend (fire and forget)
+        fetch('/.netlify/functions/send-notification', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email,
+                userAgent: navigator.userAgent
+            })
+        }).catch(err => console.log('Notification skipped:', err));
+
         // Store in localStorage
         localStorage.setItem('datajam_api_docs_email', email);
 
@@ -1888,7 +2011,9 @@ const searchableContent = [
     { title: 'Authentication', section: '#authentication', keywords: 'login credentials username password basic auth header authorization' },
     { title: 'GetData Endpoint', section: '#endpoints', keywords: 'getdata impressions visitors dwelltime movement data retrieve' },
     { title: 'GetDeviceInfo Endpoint', section: '#endpoints', keywords: 'getdeviceinfo device info latitude longitude location gps coordinates lat long' },
+    { title: 'GetOccuData Endpoint', section: '#occupancy', keywords: 'getoccudata occupancy capacity real-time monitoring space utilisation project-wide' },
     { title: 'AddData Endpoint', section: '#endpoints', keywords: 'adddata post submit custom user data external integration' },
+    { title: 'Occupancy Data', section: '#occupancy', keywords: 'occupancy capacity real-time monitoring aggregate project all devices' },
     { title: 'Data Types', section: '#data-types', keywords: 'impression visitors dwelltime userdata type filter all default' },
     { title: 'Request Format', section: '#request-format', keywords: 'json body project_name device_number start_date end_date parameters request' },
     { title: 'Response Format', section: '#response-format', keywords: 'json response error success hour date device sum' },
@@ -1989,6 +2114,8 @@ weekAgo.setDate(weekAgo.getDate() - 7);
 
 document.getElementById('sandbox-start').value = weekAgo.toISOString().split('T')[0];
 document.getElementById('sandbox-end').value = today.toISOString().split('T')[0];
+document.getElementById('sandbox-start-occu').value = weekAgo.toISOString().split('T')[0];
+document.getElementById('sandbox-end-occu').value = today.toISOString().split('T')[0];
 
 // API Proxy URL (Netlify serverless function)
 const PROXY_URL = '/.netlify/functions/api-proxy';
@@ -2103,6 +2230,72 @@ document.getElementById('sandbox-send-info').addEventListener('click', async () 
                 payload: {
                     project_name: project,
                     device_number: device
+                }
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && !data.error) {
+            statusEl.textContent = '200 OK';
+            statusEl.className = 'sandbox-status success';
+        } else {
+            statusEl.textContent = data.msg ? 'API Error' : 'Error';
+            statusEl.className = 'sandbox-status error';
+        }
+
+        outputEl.textContent = JSON.stringify(data, null, 2);
+
+    } catch (error) {
+        statusEl.textContent = 'Error';
+        statusEl.className = 'sandbox-status error';
+        outputEl.textContent = '// Error: ' + error.message;
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send Request';
+});
+
+// GetOccuData request
+document.getElementById('sandbox-send-occu').addEventListener('click', async () => {
+    const btn = document.getElementById('sandbox-send-occu');
+    const statusEl = document.getElementById('sandbox-status-occu');
+    const outputEl = document.getElementById('sandbox-output-occu');
+
+    const email = document.getElementById('sandbox-email-occu').value;
+    const password = document.getElementById('sandbox-password-occu').value;
+    const project = document.getElementById('sandbox-project-occu').value;
+    const startDate = document.getElementById('sandbox-start-occu').value;
+    const endDate = document.getElementById('sandbox-end-occu').value;
+
+    // Validation
+    if (!email || !password || !project || !startDate || !endDate) {
+        statusEl.textContent = 'Missing fields';
+        statusEl.className = 'sandbox-status error';
+        outputEl.textContent = '// Please fill in all required fields';
+        return;
+    }
+
+    // Show loading state
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    statusEl.textContent = 'Loading...';
+    statusEl.className = 'sandbox-status loading';
+    outputEl.textContent = '// Fetching occupancy data via proxy...';
+
+    try {
+        const response = await fetch(PROXY_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                endpoint: 'GetOccuData',
+                credentials: email + ':' + password,
+                payload: {
+                    project_name: project,
+                    start_date: startDate,
+                    end_date: endDate
                 }
             })
         });

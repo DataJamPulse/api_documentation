@@ -55,7 +55,7 @@ exports.handler = async (event) => {
         const { endpoint, credentials, payload } = JSON.parse(event.body);
 
         // Validate endpoint (only allow known endpoints)
-        const allowedEndpoints = ['GetData', 'GetDeviceInfo', 'AddData'];
+        const allowedEndpoints = ['GetData', 'GetDeviceInfo', 'AddData', 'GetOccuData'];
         if (!allowedEndpoints.includes(endpoint)) {
             return {
                 statusCode: 400,
